@@ -47,22 +47,51 @@
  *   addUrgentItem(["pyaaz"], "dhaniya")              // => ["dhaniya", "pyaaz"]
  *   removeLastItem(["tamatar", "pyaaz", "mirchi"])   // => "mirchi"
  */
+
 export function addToCart(cart, item) {
-  // Your code here
+    // 1. Agar cart array NAHI hai, toh return -1
+    if (!Array.isArray(cart)) return -1;
+
+    // 2. Item validate karo (must be non-empty string)
+    if (typeof item !== "string" || item === "") return cart.length;
+
+    // 3. .push() item ko end mein daalta hai aur NEW length return karta hai
+    return cart.push(item);
 }
 
 export function addUrgentItem(cart, item) {
-  // Your code here
+    // 1. Invalid cart ke liye empty array return karo
+    if (!Array.isArray(cart)) return [];
+
+    // 2. Invalid item ke liye cart unchanged return karo
+    if (typeof item !== "string" || item === "") return cart;
+
+    // 3. .unshift() item ko START mein daalta hai
+    cart.unshift(item);
+    return cart;
 }
 
 export function removeLastItem(cart) {
-  // Your code here
+    // 1. Check if it's an array AND not empty
+    if (!Array.isArray(cart) || cart.length === 0) return undefined;
+
+    // 2. .pop() removes and returns the last element
+    return cart.pop();
 }
 
 export function isInCart(cart, item) {
-  // Your code here
+    // 1. Agar array nahi hai, toh item hone ka sawal hi nahi (return false)
+    if (!Array.isArray(cart)) return false;
+
+    // 2. .includes() returns true/false based on existence
+    return cart.includes(item);
 }
 
 export function mergeCarts(cart1, cart2) {
-  // Your code here
+    // 1. Dono ko array ki tarah treat karo, nahi toh empty array use karo
+    const safeCart1 = Array.isArray(cart1) ? cart1 : [];
+    const safeCart2 = Array.isArray(cart2) ? cart2 : [];
+
+    // 2. .concat() dono ko jod kar ek NAYA array deta hai
+    return safeCart1.concat(safeCart2);
 }

@@ -45,18 +45,35 @@
  *   createPaanOrder({type:"meetha"}, {extra:"gulkand"}) // => {type:"meetha",extra:"gulkand"}
  *   updatePrices({meetha:30, saada:20}, 10)              // => {meetha:40, saada:30}
  */
+
+// helper functions
+const isObject = (obj) => typeof obj === "object" && obj !== null && !Array.isArray(obj);
+
 export function createPaanOrder(basePaan, customizations) {
   // Your code here
+    if (!isObject(basePaan)) return {};
+    return Object.assign({}, basePaan, isObject(customizations) ? customizations : {});
 }
 
 export function freezeMenu(menu) {
   // Your code here
+    if (!isObject(menu)) return {};
+    return Object.freeze(menu);
 }
 
 export function updatePrices(menu, increase) {
   // Your code here
+    if (!isObject(menu) || typeof increase !== "number") return {};
+
+    const entries = Object.entries(menu);
+    const updatedEntries = entries.map(([key, value]) => [key, value + increase]);
+    return Object.fromEntries(updatedEntries);
 }
 
 export function mergeDailySpecials(regularMenu, specialsMenu) {
   // Your code here
+    const safeRegular = isObject(regularMenu) ? regularMenu : {};
+    const safeSpecials = isObject(specialsMenu) ? specialsMenu : {};
+
+    return { ...safeRegular, ...safeSpecials };
 }
